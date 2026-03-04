@@ -1,42 +1,228 @@
-# 🎉 MarketHub - Complete Full-Stack E-Commerce Platform
+# CampusMall - Complete Full-Stack E-Commerce Platform
 
-## ✅ PROJECT STATUS: 100% COMPLETE
+![Version](https://img.shields.io/badge/version-1.0.0-blue)
+![Status](https://img.shields.io/badge/status-Production%20Ready-brightgreen)
+![License](https://img.shields.io/badge/license-MIT-green)
 
----
-
-## 📦 What You Have
-
-### ✅ Frontend (React + TypeScript)
-- Complete React application with 11 pages
-- 3 comprehensive dashboards (Admin, Vendor, Customer)
-- Shopping cart system
-- Order management workflow
-- User authentication
-- Responsive design (mobile, tablet, desktop)
-- 30+ UI components
-- State management with Context API
-
-**Location**: `frontend/`
-**Start**: `cd frontend && npm run dev`
-
-### ✅ Backend (Django REST API)
-- Complete Django REST API
-- 5 specialized apps
-- 6 database models
-- 25+ API endpoints
-- JWT authentication
-- Role-based access control
-- Admin panel
-- Test data fixtures
-
-**Location**: `backend/`
-**Start**: `cd backend && python manage.py runserver`
+## Table of Contents
+1. [Project Overview](#project-overview)
+2. [Key Features](#key-features)
+3. [Technology Stack](#technology-stack)
+4. [Architecture](#architecture)
+5. [Project Structure](#project-structure)
+6. [Database Schema](#database-schema)
+7. [Setup & Installation](#setup--installation)
+8. [API Documentation](#api-documentation)
+9. [Frontend Features](#frontend-features)
+10. [Testing](#testing)
+11. [Deployment](#deployment)
+12. [Developer Guide](#developer-guide)
+13. [Documentation for Research & Academic Reports](#documentation-for-research--academic-reports)
+14. [Troubleshooting](#troubleshooting)
+15. [Contributing](#contributing)
 
 ---
 
-## 🚀 Quick Start Guide
+## Project Overview
 
-### 1. Setup Backend (5 minutes)
+**CampusMall** is a production-ready, full-stack e-commerce platform designed for modern online marketplaces. It enables multiple vendors to sell products through a centralized platform with a comprehensive admin dashboard, vendor management system, and customer-facing store.
+
+### Business Model
+- **Multi-Vendor Marketplace**: Multiple vendors can sell products on a single platform
+- **Electronic Payments**: Integrated Stripe payment gateway for secure transactions
+- **Vendor Commission**: System supports commission-based revenue models
+- **Coupon Management**: Promotional campaigns with customizable coupons
+- **Order Management**: Complete order lifecycle from placement to delivery
+- **User Ratings & Reviews**: Customer testimonials and product ratings
+- **Admin Oversight**: Comprehensive admin panel for platform management
+
+### Current Status
+✅ **100% Complete** - Ready for deployment and production use
+
+---
+
+## Key Features
+
+### For Customers
+- ✅ User authentication (JWT-based)
+- ✅ Browse products by category
+- ✅ Advanced product search and filtering
+- ✅ Shopping cart functionality
+- ✅ Secure checkout with Stripe integration
+- ✅ Order tracking and history
+- ✅ User profile management
+- ✅ Address management
+- ✅ Product reviews and ratings
+- ✅ Coupon code application
+- ✅ My Orders dashboard
+
+### For Vendors
+- ✅ Vendor dashboard with analytics
+- ✅ Product catalog management
+- ✅ Inventory management (stock tracking)
+- ✅ Order management and fulfillment
+- ✅ Revenue analytics
+- ✅ Vendor profile setup
+
+### For Administrators
+- ✅ Complete admin panel
+- ✅ User management
+- ✅ Vendor management and approval
+- ✅ Product moderation
+- ✅ Order monitoring
+- ✅ Platform analytics
+- ✅ Payment verification
+- ✅ Coupon management
+- ✅ System logs and reports
+
+### Platform Features
+- ✅ Multi-role authentication (Admin, Vendor, Customer)
+- ✅ Role-based access control (RBAC)
+- ✅ Responsive design (Mobile, Tablet, Desktop)
+- ✅ RESTful API with OpenAPI/Swagger documentation
+- ✅ PostgreSQL-ready (currently SQLite for development)
+- ✅ Email notification system
+- ✅ File upload handling
+- ✅ API rate limiting
+- ✅ CORS support for frontend
+
+---
+
+## Technology Stack
+
+### Backend
+| Component | Technology |
+|-----------|-----------|
+| **Framework** | Django 5.2.1 |
+| **API** | Django REST Framework 3.14.0 |
+| **Authentication** | JWT (djangorestframework-simplejwt) |
+| **API Documentation** | drf-spectacular 0.27.2 |
+| **Database** | SQLite 3 (PostgreSQL ready) |
+| **Payment** | Stripe API |
+| **CORS** | django-cors-headers |
+| **Filtering** | django-filter |
+| **File Processing** | Pillow 12.1.0 |
+| **PDF Generation** | ReportLab |
+| **Environment** | python-decouple, python-dotenv |
+
+### Frontend
+| Component | Technology |
+|-----------|-----------|
+| **Framework** | React 18+ |
+| **Language** | TypeScript |
+| **Build Tool** | Vite 5+ |
+| **Styling** | Tailwind CSS 3+ |
+| **UI Components** | Shadcn/ui (Radix UI) |
+| **Form Handling** | React Hook Form |
+| **HTTP Client** | Axios |
+| **State Management** | React Context API |
+| **Icons** | Lucide React |
+| **Carousel** | Embla Carousel |
+| **Testing** | Vitest |
+| **Linting** | ESLint |
+
+### Infrastructure
+| Component | Technology |
+|-----------|-----------|
+| **Backend Server** | Django Development Server (Gunicorn ready) |
+| **Frontend Server** | Vite Dev Server / Static hosting |
+| **Payment Gateway** | Stripe |
+| **File Storage** | Local filesystem (S3-ready architecture) |
+
+---
+
+## Architecture
+
+### System Architecture Overview
+```
+Client (React + TypeScript) 
+  ↓ HTTP/REST with JWT
+API Layer (Django REST Framework)
+  ↓ ORM
+Business Logic (Django Apps)
+  ↓
+Data Layer (SQLite/PostgreSQL)
+  ↓
+External Services (Stripe, Email, Storage)
+```
+
+### Core Components
+1. **Frontend**: React SPA with TypeScript
+2. **Backend API**: Django REST Framework
+3. **Authentication**: JWT tokens
+4. **Database**: Relational (SQLite/PostgreSQL)
+5. **Payment**: Stripe integration
+6. **File Storage**: Local/Cloud storage
+7. **Admin**: Django admin + custom panel
+
+---
+
+## Project Structure
+
+### Key Directories
+```
+campus_mall/
+├── backend/
+│   ├── apps/
+│   │   ├── users/          # Authentication & user management
+│   │   ├── products/       # Product catalog
+│   │   ├── orders/         # Order management
+│   │   ├── vendors/        # Vendor management
+│   │   ├── payments/       # Payment processing
+│   │   ├── coupons/        # Coupon system
+│   │   ├── testimonials/   # Reviews & ratings
+│   │   └── admin_panel/    # Admin features
+│   ├── core/               # Django settings
+│   ├── media/              # Uploaded files
+│   └── db.sqlite3          # Database
+│
+├── frontend/
+│   ├── src/
+│   │   ├── components/     # Reusable components
+│   │   ├── pages/          # Page components
+│   │   ├── context/        # State management
+│   │   ├── services/       # API services
+│   │   ├── hooks/          # Custom hooks
+│   │   └── lib/            # Utilities
+│   ├── public/             # Static assets
+│   └── vite.config.ts      # Vite configuration
+│
+└── README.md               # This file
+```
+
+---
+
+## Database Schema
+
+### Core Models
+1. **User**: Customer, Vendor, Admin accounts
+2. **Vendor**: Vendor profiles and information
+3. **Product**: Product catalog items
+4. **ProductVariation**: Product variants (size, color)
+5. **Order**: Customer orders
+6. **OrderItem**: Items in each order
+7. **Coupon**: Promotional discount codes
+8. **Testimonial**: Product reviews and ratings
+
+### Entity Relationships
+- User → Vendor (one-to-one when vendor)
+- User → Order (one-to-many)
+- Vendor → Product (one-to-many)
+- Vendor → Order (one-to-many)
+- Product → ProductVariation (one-to-many)
+- Product → OrderItem (one-to-many)
+- Order → OrderItem (one-to-many)
+
+---
+
+## Setup & Installation
+
+### Prerequisites
+- Python 3.10+
+- Node.js 18+
+- Git
+
+### Backend Setup
 
 ```bash
 cd backend
@@ -44,7 +230,7 @@ cd backend
 # Create virtual environment
 python -m venv venv
 venv\Scripts\activate  # Windows
-# or source venv/bin/activate  # macOS/Linux
+# or: source venv/bin/activate  # macOS/Linux
 
 # Install dependencies
 pip install -r requirements.txt
@@ -52,482 +238,391 @@ pip install -r requirements.txt
 # Setup database
 python manage.py makemigrations
 python manage.py migrate
-python manage.py create_test_data
 
-# Start backend
+# Create admin user
+python manage.py createsuperuser
+
+# Run server
 python manage.py runserver
 ```
 
-✅ Backend running at: `http://localhost:8000`
-Routes:
+Backend runs at: `http://localhost:8000`
 
-Schema JSON: `http://localhost:8000/api/schema/`
-Swagger UI: `http://localhost:8000/api/docs/swagger/`
-
-### 2. Setup Frontend (5 minutes)
-
-In a new terminal:
+### Frontend Setup
 
 ```bash
 cd frontend
 
 # Install dependencies
-npm install  # or bun install
+npm install
 
-# Update API URL in .env.local
+# Create .env.local
 echo "VITE_API_URL=http://localhost:8000/api" > .env.local
 
-# Start frontend
-npm run dev  # or bun run dev
+# Run dev server
+npm run dev
 ```
 
-✅ Frontend running at: `http://localhost:5173`
-
-### 3. Login & Test
-
-- Open `http://localhost:5173`
-- Login with:
-  - Email: `customer@example.com`
-  - Password: `customer123`
-- Browse products
-- Create orders
-- Check your orders
+Frontend runs at: `http://localhost:5173`
 
 ---
 
-## 🔐 Test Credentials
+## API Documentation
 
-### Admin
-```
-Email: admin@example.com
-Password: admin123
-Access: All admin features + Django admin panel
-```
+### Base URL: `http://localhost:8000/api`
 
-### Vendors (3 available)
-```
-Vendor 1: vendor1@example.com / vendor123
-Vendor 2: vendor2@example.com / vendor123
-Vendor 3: vendor3@example.com / vendor123
-Access: Product management, order tracking, store profile
-```
+### Authentication Endpoints
+- `POST /users/register/` - Register new user
+- `POST /users/login/` - Login user
+- `POST /users/refresh/` - Refresh JWT token
+- `GET /users/profile/` - Get user profile
 
-### Customer
-```
-Email: customer@example.com
-Password: customer123
-Access: Browse products, checkout, order tracking
-```
+### Product Endpoints
+- `GET /products/` - List products
+- `GET /products/<id>/` - Product details
+- `POST /products/` - Create product (vendor)
+- `PUT /products/<id>/` - Update product
+- `DELETE /products/<id>/` - Delete product
 
----
+### Order Endpoints
+- `GET /orders/` - List user orders
+- `POST /orders/` - Create order
+- `GET /orders/<id>/` - Order details
+- `PUT /orders/<id>/` - Update order
+- `POST /orders/<id>/cancel/` - Cancel order
 
-## 📊 Project Structure
+### Payment Endpoints
+- `POST /payments/create-payment-intent/` - Stripe payment intent
+- `POST /payments/confirm-payment/` - Confirm payment
 
-```
-shop-sparkle-212-main/
-├── frontend/                           # React Application
-│   ├── src/
-│   │   ├── components/                 # UI Components
-│   │   ├── pages/                      # Page Components
-│   │   ├── context/                    # State Management
-│   │   ├── services/                   # API Service Layer
-│   │   ├── hooks/                      # Custom Hooks
-│   │   ├── lib/                        # Utilities
-│   │   └── App.tsx                     # Main App
-│   ├── package.json
-│   ├── vite.config.ts
-│   └── README.md
-│
-├── backend/                            # Django REST API
-│   ├── manage.py
-│   ├── requirements.txt
-│   ├── core/                           # Django Settings
-│   ├── apps/
-│   │   ├── users/                      # Auth & Users
-│   │   ├── vendors/                    # Vendors/Stores
-│   │   ├── products/                   # Products & Categories
-│   │   ├── orders/                     # Orders
-│   │   └── admin_panel/                # Admin Features
-│   ├── SETUP_GUIDE.md
-│   ├── QUICK_START.md
-│   └── BACKEND_VERIFICATION.md
-│
-└── Documentation Files
-    ├── IMPLEMENTATION_GUIDE.md         # Frontend Features
-    ├── BACKEND_INTEGRATION.md          # Backend Setup
-    ├── ARCHITECTURE.md                 # System Architecture
-    ├── VERIFICATION_CHECKLIST.md       # Feature Checklist
-    ├── PROJECT_COMPLETION_SUMMARY.md   # Project Overview
-    ├── BACKEND_READY.md                # Backend Integration
-    └── README.md (this file)
-```
+### Vendor Endpoints
+- `GET /vendors/` - List vendors
+- `GET /vendors/<id>/` - Vendor profile
+- `POST /vendors/` - Register vendor
+
+### Admin Endpoints
+- `GET /admin/dashboard/` - Dashboard stats
+- `GET /admin/users/` - List users
+- `GET /admin/vendors/` - List vendors
 
 ---
 
-## ✨ Features Implemented
+## Frontend Features
 
-### 10 Project Modules - All Complete ✅
+### Pages
+- Homepage with featured products
+- Product listing with filters
+- Product detail page
+- Shopping cart
+- User checkout
+- Order management
+- User dashboard
+- Vendor dashboard
+- Admin dashboard
+- Authentication pages
 
-#### 1. User Authentication & Authorization
-- User registration with role selection
-- User login with JWT tokens
-- 3 user roles (Admin, Vendor, Customer)
-- Protected routes
-- Role-based dashboards
-
-#### 2. Vendor Management
-- Vendor profile creation
-- Store details management
-- Product management (Add/Edit/Delete)
-- Order tracking
-- Store rating system
-- Vendor approval workflow
-
-#### 3. Product Management
-- Product catalog with 5 categories
-- Search and filtering
-- Product images
-- Stock management
-- Vendor association
-- Category hierarchies
-
-#### 4. Customer Features
-- Product browsing
-- Product search
-- Category filtering
-- Product detail view
-- Add to cart
-- Checkout process
-
-#### 5. Shopping Cart & Order Management
-- Shopping cart with quantity management
-- Order creation
-- 5-order statuses (PENDING, CONFIRMED, SHIPPED, DELIVERED, CANCELLED)
-- Order tracking
-- Order history
-- Order cancellation
-
-#### 6. Admin Dashboard
-- Platform statistics
-- User management
-- Vendor approval/suspension
-- Order monitoring
-- Sales reports
-- Revenue tracking
-
-#### 7. Payment (Simulation)
-- 4 payment methods (Credit Card, Debit Card, PayPal, Bank Transfer)
-- Payment status tracking
-- Order confirmation
-- Success page
-
-#### 8. REST API Design
-- 25+ endpoints
-- Proper HTTP methods
-- JWT authentication
-- Request validation
-- Error handling
-- CORS support
-
-#### 9. Frontend Development
-- React with TypeScript
-- Vite build tool
-- Tailwind CSS
-- shadcn/ui components
-- Responsive design
-- Context API state management
-
-#### 10. Database Design
-- 6 normalized models
-- Proper relationships
-- Indexes for performance
-- Migration system
-- Django ORM
+### Components (30+)
+- Navbar with authentication
+- Product cards
+- Shopping cart widget
+- Order tracker
+- Form components
+- Address manager
+- Profile editor
+- And more...
 
 ---
 
-## 🔌 API Endpoints (25+)
+## Testing
 
-### Authentication (3)
-- POST `/api/auth/register/`
-- POST `/api/auth/login/`
-- POST `/api/auth/refresh/`
-
-### Products (7)
-- GET `/api/products/`
-- GET `/api/products/{id}/`
-- POST `/api/products/`
-- PUT `/api/products/{id}/`
-- DELETE `/api/products/{id}/`
-- GET `/api/products/my_products/`
-- GET `/api/categories/`
-
-### Orders (6)
-- GET `/api/orders/`
-- POST `/api/orders/`
-- GET `/api/orders/{id}/`
-- PUT `/api/orders/{id}/update_status/`
-- GET `/api/orders/my_orders/`
-- GET `/api/orders/filter_by_status/`
-
-### Vendors (5)
-- GET `/api/vendors/`
-- GET `/api/vendors/{id}/`
-- GET `/api/vendors/my_store/`
-- POST `/api/vendors/become_vendor/`
-- PUT `/api/vendors/{id}/`
-
-### Admin (6)
-- GET `/api/admin/stats/`
-- GET `/api/admin/users/`
-- PUT `/api/admin/users/{id}/status/`
-- GET `/api/admin/vendors/`
-- PUT `/api/admin/vendors/{id}/approve/`
-- PUT `/api/admin/vendors/{id}/suspend/`
-
----
-
-## 📚 Documentation
-
-### Quick Start Guides
-- **QUICK_START.md** (Backend) - 5-minute setup
-- **SETUP_GUIDE.md** (Backend) - Comprehensive guide
-
-### Feature Documentation
-- **IMPLEMENTATION_GUIDE.md** - All 10 modules detailed
-- **ARCHITECTURE.md** - System architecture overview
-
-### Verification & Summary
-- **VERIFICATION_CHECKLIST.md** - Feature checklist
-- **PROJECT_COMPLETION_SUMMARY.md** - Project overview
-- **BACKEND_READY.md** - Backend integration guide
-- **BACKEND_VERIFICATION.md** - Backend checklist
-
----
-
-## 🛠️ Technology Stack
-
-### Frontend
-- React 18
-- TypeScript 5
-- Vite 5
-- TailwindCSS 3
-- shadcn/ui (30+ components)
-- React Router v6
-- React Context API
-- React Query
-- React Hook Form
-- Zod validation
-- Sonner (notifications)
-
-### Backend
-- Django 4.2
-- Django REST Framework
-- SimpleJWT
-- PostgreSQL/SQLite
-- CORS Headers
-- Python 3.11+
-
-### Development
-- Node.js / Bun
-- npm / bun
-- Git
-- VS Code
-
----
-
-## 🚀 Next Steps
-
-### Immediate (Now)
-1. ✅ Start backend: `python manage.py runserver`
-2. ✅ Update frontend `.env.local`: `VITE_API_URL=http://localhost:8000/api`
-3. ✅ Start frontend: `npm run dev`
-4. ✅ Test login with provided credentials
-
-### Testing (30 minutes)
-1. ✅ Test user registration
-2. ✅ Test user login
-3. ✅ Browse products
-4. ✅ Add to cart
-5. ✅ Create order
-6. ✅ Test vendor dashboard
-7. ✅ Test admin dashboard
-
-### Production (When Ready)
-1. ✅ Update to PostgreSQL
-2. ✅ Set SECRET_KEY for production
-3. ✅ Configure domain
-4. ✅ Setup HTTPS
-5. ✅ Deploy backend
-6. ✅ Deploy frontend
-7. ✅ Monitor & optimize
-
----
-
-## 📊 Statistics
-
-### Code Quality
-- **Frontend**: 2000+ lines of React code
-- **Backend**: 2500+ lines of Django code
-- **TypeScript Coverage**: 100%
-- **Models**: 6 database tables
-- **Endpoints**: 25+ API routes
-- **Components**: 30+ UI components
-- **Pages**: 11 complete pages
-- **Dashboards**: 3 role-specific dashboards
-
-### Documentation
-- 10+ comprehensive guides
-- 200+ pages of documentation
-- Code examples provided
-- Troubleshooting sections
-- Deployment guides
-
-### Test Data
-- 1 Admin account
-- 3 Vendor accounts
-- 1 Customer account
-- 5 Product categories
-- 7 Sample products
-
----
-
-## ✅ Quality Assurance
-
-### Code Quality ✅
-- TypeScript for type safety
-- Component-based architecture
-- Clean code practices
-- Proper error handling
-- Input validation
-- Security best practices
-
-### Functionality ✅
-- All features working
-- All endpoints tested
-- Mock data for testing
-- Responsive design
-- User flows complete
-
-### Documentation ✅
-- Setup instructions clear
-- API fully documented
-- Architecture explained
-- Examples provided
-- Troubleshooting included
-
----
-
-## 🔒 Security Features
-
-- ✅ JWT authentication with expiration
-- ✅ Role-based access control
-- ✅ Password hashing (Django default)
-- ✅ CORS protection
-- ✅ CSRF protection
-- ✅ Input validation
-- ✅ Permission checks
-- ✅ Secure API endpoints
-- ✅ Admin-only endpoints
-- ✅ SQL injection prevention (ORM)
-- ✅ XSS protection (React)
-
----
-
-## 🎯 Performance
-
-### Frontend
-- Optimized build with Vite
-- Component lazy loading ready
-- Image optimization support
-- Responsive design
-- Mobile-first approach
-
-### Backend
-- Database indexing
-- Query optimization
-- Pagination support
-- Caching ready
-- Response compression support
-- Scalability architecture
-
----
-
-## 📞 Support Resources
-
-### Documentation Files
-1. `backend/QUICK_START.md` - Backend setup
-2. `backend/SETUP_GUIDE.md` - Detailed guide
-3. `IMPLEMENTATION_GUIDE.md` - Features
-4. `ARCHITECTURE.md` - System design
-
-### API Documentation
-- Auto-generated at `http://localhost:8000/api/`
-- Django Admin: `http://localhost:8000/admin/`
-- Interactive browsable API
-
-### Common Commands
+### Backend Tests
 ```bash
-# Backend
 cd backend
-python manage.py runserver          # Start
-python manage.py migrate            # Database
-python manage.py create_test_data   # Test data
-python manage.py createsuperuser    # Admin user
+python manage.py test
+python manage.py test apps.products -v 2
+```
 
-# Frontend
+### Frontend Tests
+```bash
 cd frontend
-npm run dev                          # Start
-npm run build                        # Build
-npm run preview                      # Preview
+npm run test
+npm run test:watch
 ```
 
 ---
 
-## 🎉 Congratulations!
+## Deployment
 
-Your complete e-commerce platform is ready:
+### Backend
+```bash
+# Using Gunicorn
+pip install gunicorn
+gunicorn core.wsgi:application --bind 0.0.0.0:8000
 
-✅ **Frontend**: Production-ready React application
-✅ **Backend**: Production-ready Django REST API
-✅ **Database**: 6 normalized models
-✅ **API**: 25+ endpoints
-✅ **Features**: All 10 modules implemented
-✅ **Documentation**: Comprehensive guides
-✅ **Testing**: Test data and credentials
-✅ **Security**: Implemented best practices
-✅ **Performance**: Optimized code
-✅ **Scalability**: Architecture designed for growth
+# Using Docker (optional)
+docker build -t campusmart-backend .
+docker run -p 8000:8000 campusmart-backend
+```
+
+### Frontend
+```bash
+# Build
+npm run build
+
+# Deploy to Vercel
+vercel --prod
+
+# Or deploy to Netlify
+netlify deploy --prod --dir=dist
+```
 
 ---
 
-## 🚀 Ready to Go!
+## Developer Guide
 
-1. Start backend: `cd backend && python manage.py runserver`
-2. Start frontend: `cd frontend && npm run dev`
-3. Open browser: `http://localhost:5173`
-4. Login and test!
+### Adding New Features
 
-**Your MarketHub e-commerce platform is complete and ready for use! 🎊**
+1. **Create Backend Model**
+```python
+# apps/feature/models.py
+class Feature(models.Model):
+    name = models.CharField(max_length=255)
+    description = models.TextField()
+```
+
+2. **Create Serializer**
+```python
+# apps/feature/serializers.py
+class FeatureSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Feature
+        fields = ['id', 'name', 'description']
+```
+
+3. **Create ViewSet**
+```python
+# apps/feature/views.py
+class FeatureViewSet(viewsets.ModelViewSet):
+    queryset = Feature.objects.all()
+    serializer_class = FeatureSerializer
+```
+
+4. **Register URLs**
+```python
+# apps/feature/urls.py
+router.register(r'features', FeatureViewSet)
+```
+
+5. **Create Frontend Component**
+```typescript
+// src/components/FeatureList.tsx
+export function FeatureList() {
+  // Component code
+}
+```
+
+### Code Style Guidelines
+- **Backend**: Follow PEP 8
+- **Frontend**: Follow ESLint config
+- **TypeScript**: Use strict mode
+- **Comments**: Add docstrings
+- **Tests**: Write meaningful tests
 
 ---
 
-## 📝 Quick Reference
+## Documentation for Research & Academic Reports
 
-### Backend URL: `http://localhost:8000`
-### Frontend URL: `http://localhost:5173`
-### Admin Panel: `http://localhost:8000/admin`
-### API Root: `http://localhost:8000/api`
+This README is comprehensive enough to guide researchers and students in writing detailed project documentation. Here's a recommended report structure:
 
-### Test Credentials:
+### Part 1: Executive Summary (1-2 pages)
+What is CampusMall? Key features, business model, current status.
+
+### Part 2: Introduction (2-3 pages)
+E-commerce industry background, problem statement, objectives, scope.
+
+### Part 3: Requirements (3-5 pages)
+Functional requirements, non-functional requirements, use cases.
+
+### Part 4: Architecture & Design (4-6 pages)
+System architecture, design patterns, database design, security.
+
+### Part 5: Implementation (5-8 pages)
+Backend implementation, frontend implementation, key code examples.
+
+### Part 6: Testing & QA (3-4 pages)
+Unit tests, integration tests, performance testing, results.
+
+### Part 7: Deployment (3-4 pages)
+Deployment architecture, CI/CD, monitoring, backup strategy.
+
+### Part 8: Security Analysis (2-3 pages)
+Security measures, vulnerabilities, compliance, hardening.
+
+### Part 9: Performance Analysis (2-3 pages)
+Performance metrics, benchmarks, optimizations, scalability.
+
+### Part 10: Future Enhancements (1-2 pages)
+Potential improvements, advanced features, technology upgrades.
+
+### Part 11: Conclusion (1-2 pages)
+Summary, lessons learned, impact, recommendations.
+
+### Part 12: Appendices
+- Complete API reference
+- Database schema details
+- Installation guides
+- Configuration files
+- Testing reports
+
+### Research Analysis Framework
+For each major component, document:
+- **Why was it chosen?** - Rationale and alternatives
+- **How is it implemented?** - Technical details
+- **What were the challenges?** - Problems solved
+- **Performance characteristics** - Speed, scalability
+- **Security implications** - Vulnerabilities and mitigations
+
+### Report Generation Tips
+1. Use clear headings and subheadings
+2. Include diagrams and flowcharts
+3. Provide code examples
+4. Include screenshots of UI
+5. Document all design decisions
+6. Cite sources properly
+7. Write in academic style
+
+### Recommended Tools
+- **Writing**: Markdown, LaTeX, Word
+- **Diagrams**: Lucidchart, Draw.io, Mermaid
+- **API Docs**: Swagger/OpenAPI
+- **Version Control**: Git
+- **PDF Generation**: Pandoc, Weasyprint
+
+### Documentation Checklist
+- [ ] Executive summary written
+- [ ] Introduction complete
+- [ ] Requirements documented
+- [ ] Architecture explained
+- [ ] Implementation details provided
+- [ ] Testing results included
+- [ ] Deployment guide written
+- [ ] Security analysis done
+- [ ] Performance analysis complete
+- [ ] Future enhancements listed
+- [ ] Conclusion written
+- [ ] Appendices included
+- [ ] All references cited
+- [ ] Proof-read
+
+---
+
+## Troubleshooting
+
+### Common Backend Issues
+
+#### ModuleNotFoundError
+```
+Solution: pip install -r requirements.txt
+```
+
+#### Database Migration Errors
+```
+Solution:
+python manage.py makemigrations
+python manage.py migrate
+```
+
+#### CORS Errors
+```
+Solution: Add frontend URL to CORS_ALLOWED_ORIGINS in settings.py
+```
+
+#### Stripe API Errors
+```
+Solution: Verify STRIPE_SECRET_KEY in .env is correct
+```
+
+### Common Frontend Issues
+
+#### Cannot Reach API
+```
+Solution:
+1. Ensure backend is running
+2. Check VITE_API_URL in .env.local
+3. Verify CORS settings on backend
+```
+
+#### Authentication Issues
+```
+Solution:
+1. Clear browser localStorage
+2. Re-login
+3. Check JWT expiration settings
+```
+
+#### Build Errors
+```
+Solution: Check tsconfig.json path aliases
+```
+
+---
+
+## Contributing
+
+### Commit Message Format
+```
+<type>(<scope>): <subject>
+
+Types: feat, fix, docs, style, refactor, test, chore
+Example: feat(orders): add order status update
+```
+
+### Pull Request Process
+1. Create feature branch
+2. Write code and tests
+3. Update documentation
+4. Commit with clear messages
+5. Push and create PR
+6. Address review comments
+7. Merge when approved
+
+---
+
+## License
+
+MIT License - see LICENSE file for details
+
+---
+
+## Support & Contact
+
+- **GitHub Issues**: Report bugs
+- **Email**: support@campusmart.com
+- **Documentation**: Check wiki
+- **Community**: Discord/Forum
+
+---
+
+## Quick Reference
+
+### URLs
+- Frontend: `http://localhost:5173`
+- Backend: `http://localhost:8000`
+- API: `http://localhost:8000/api`
+- Admin: `http://localhost:8000/admin`
+
+### Test Credentials (Default)
 - Admin: `admin@example.com` / `admin123`
 - Customer: `customer@example.com` / `customer123`
 - Vendor: `vendor1@example.com` / `vendor123`
 
 ---
 
+**Project**: CampusMall - E-Commerce Platform
 **Version**: 1.0.0
-**Status**: ✅ COMPLETE & PRODUCTION READY
-**Date**: February 21, 2026
+**Status**: Production Ready ✅
+**Last Updated**: March 2026
 
-**Enjoy your new e-commerce platform! 🎉**
+---
+
+**Ready to get started? Follow the Setup & Installation section above!**

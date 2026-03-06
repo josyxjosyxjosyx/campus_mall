@@ -1,22 +1,52 @@
 import { Link, useNavigate } from "react-router-dom";
-import { ShoppingCart, User, Menu, X, LogOut, LayoutDashboard, ChevronDown, Settings, Globe } from "lucide-react";
+import { ShoppingCart, User, Menu, X, LogOut, LayoutDashboard, ChevronDown, Settings, Globe, Search, Heart } from "lucide-react";
 import SearchAutocomplete from "@/components/SearchAutocomplete";
 import { useAuth } from "@/context/AuthContext";
 import { useCurrency, type Currency } from "@/context/CurrencyContext";
 import { useCart } from "@/context/CartContext";
 import { Button } from "@/components/ui/button";
 import { ProfileEditor } from "@/components/ProfileEditor";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Navbar = () => {
   const { user, logout, isAuthenticated } = useAuth();
   const { totalItems } = useCart();
   const { currency, setCurrency } = useCurrency();
   const navigate = useNavigate();
+  const [wishlistCount, setWishlistCount] = useState<number>(0);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const [currencyOpen, setCurrencyOpen] = useState(false);
   const [showProfileEditor, setShowProfileEditor] = useState(false);
+  const [categories, setCategories] = useState<string[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string>("All");
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await fetch((import.meta.env.VITE_API_URL || "http://localhost:8000/api") + "/categories/");
+        const data = await res.json().catch(() => []);
+        const items = Array.isArray(data) ? data : data?.results || [];
+        setCategories(items.map((c: any) => c.name || c));
+      } catch (e) {
+        // ignore
+      }
+    };
+    load();
+    // load wishlist count via API helper (handles auth)
+    const loadWishlistCount = async () => {
+      try {
+        const res = await (await import('@/services/api')).api.getWishlist();
+        if (res.success && res.data) {
+          const items = Array.isArray(res.data) ? res.data : res.data.results || [];
+          setWishlistCount(items.length || 0);
+        }
+      } catch (e) {
+        // ignore
+      }
+    };
+    loadWishlistCount();
+  }, []);
 
   const dashboardPath = user?.role === "ADMIN" ? "/admin" : user?.role === "VENDOR" ? "/vendor" : "/dashboard";
 
@@ -30,10 +60,11 @@ const Navbar = () => {
         </div>
       </div>
       <div className="container mx-auto flex items-center justify-between h-16 px-4">
-        <Link to="/" className="flex items-center gap-2 shrink-0">
-          <img src="/logo.png" alt="Campus Mall" className="h-11 w-auto" />
-          <h1 className="text-lg font-semibold text-foreground">Campus Mall</h1>
-        </Link>
+        <div className="flex items-center gap-3 shrink-0">
+          <Link to="/" className="flex items-center gap-2">
+            <img src="/logo.png" alt="Campus Mall" className="h-11 w-auto" />
+          </Link>
+        </div>
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-8">
@@ -46,10 +77,25 @@ const Navbar = () => {
           )}
         </nav>
 
-        {/* Search (desktop) */}
-        <div className="hidden md:flex items-center flex-1 justify-center max-w-xl px-6">
-          <SearchAutocomplete />
-        </div>
+        {/* Search (desktop) - compact, expands on hover (customers only) */}
+        {(!user || user.role === "CUSTOMER") && (
+          <div className="hidden md:flex items-center flex-1 justify-center px-6">
+            <div className="flex items-center">
+              <div className="overflow-hidden w-[60px] h-[60px] hover:w-[270px] transition-[width] duration-300 rounded-full shadow-md">
+                <div className="flex items-center h-full">
+                  <div className="w-[60px] h-[60px] flex items-center justify-center bg-primary text-white rounded-full flex-shrink-0">
+                    <Search className="h-5 w-5" />
+                  </div>
+                  <div className="flex-1 pl-3 pr-3 bg-white rounded-r-full h-full flex items-center">
+                    <div className="w-full">
+                      <SearchAutocomplete className="w-full" category={selectedCategory} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         <div className="hidden md:flex items-center gap-3">
           {/* Currency Selector */}
@@ -89,10 +135,20 @@ const Navbar = () => {
 
           {(!user || user.role === "CUSTOMER") && (
             <Link to="/cart" className="relative p-2 rounded-lg hover:bg-muted transition-colors">
-              <ShoppingCart className="h-5 w-5 text-foreground" />
+              <ShoppingCart className="h-6 w-6 text-foreground" />
               {totalItems > 0 && (
                 <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs w-5 h-5 rounded-full flex items-center justify-center font-semibold">
                   {totalItems}
+                </span>
+              )}
+            </Link>
+          )}
+          {(!user || user.role === "CUSTOMER") && (
+            <Link to="/wishlist" className="relative p-2 rounded-lg hover:bg-muted transition-colors">
+              <Heart className="h-6 w-6 text-foreground" />
+              {wishlistCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs w-5 h-5 rounded-full flex items-center justify-center font-semibold">
+                  {wishlistCount}
                 </span>
               )}
             </Link>

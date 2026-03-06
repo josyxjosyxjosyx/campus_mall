@@ -60,6 +60,37 @@ def login_view(request):
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
+def check_email_view(request):
+    """Check whether an account exists for the provided email.
+
+    Request: { "email": "user@example.com" }
+    Response: 200 + { exists: True, user: { id, email, role, is_approved } } or
+              404 + { exists: False, message: "No account found" }
+    """
+    email = request.data.get('email') or request.query_params.get('email')
+    if not email:
+        return Response({'error': 'Email is required'}, status=status.HTTP_400_BAD_REQUEST)
+
+    try:
+        user = User.objects.filter(email__iexact=email).first()
+        if not user:
+            return Response({'exists': False, 'message': 'We cannot find an account with that email.'}, status=status.HTTP_404_NOT_FOUND)
+
+        return Response({
+            'exists': True,
+            'user': {
+                'id': user.id,
+                'email': user.email,
+                'role': user.role,
+                'is_approved': user.is_approved,
+            }
+        })
+    except Exception as e:
+        return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
 def register_view(request):
     """User registration endpoint."""
     serializer = RegisterSerializer(data=request.data)

@@ -106,12 +106,6 @@ const VendorDashboard = () => {
               <p className="text-gray-600 text-sm mt-1">Manage your store, products, and orders</p>
             </div>
           </div>
-          <Button 
-            onClick={() => navigate('/vendor/product/new')}
-            className="bg-gradient-to-r from-blue-500 to-blue-600 hover:shadow-lg px-6 py-2.5 flex items-center gap-2"
-          >
-            <Plus className="h-5 w-5" /> Add Product
-          </Button>
         </div>
 
         {/* Stats Cards */}
@@ -180,7 +174,15 @@ const VendorDashboard = () => {
                 <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
                   <Package className="h-6 w-6 text-blue-600" />
                   {activeTab === "products" ? "Your Products" : "Customer Reviews"}
-                </h2>
+                </h2>  
+              </div>
+              <div>
+                <Button 
+                  onClick={() => navigate('/vendor/product/new')}
+                  className="bg-gradient-to-r from-blue-500 to-blue-600 hover:shadow-lg px-6 py-2.5 flex items-center gap-2"
+                >
+                  <Plus className="h-5 w-5" /> Add Product
+                </Button>
               </div>
             </div>
 

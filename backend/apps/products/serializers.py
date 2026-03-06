@@ -4,6 +4,7 @@ Serializers for product data.
 from rest_framework import serializers
 from .models import Product, Category
 from .models import ProductImage, ProductVariation, VariationImage, ProductReview
+from .models import WishlistItem
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -98,3 +99,13 @@ ProductSerializer._declared_fields['variations'] = ProductVariationSerializer(ma
 ProductDetailSerializer._declared_fields['images'] = ProductImageSerializer(many=True, read_only=True)
 ProductDetailSerializer._declared_fields['variations'] = ProductVariationSerializer(many=True, read_only=True)
 ProductDetailSerializer._declared_fields['reviews'] = ProductReviewSerializer(many=True, read_only=True)
+
+
+class WishlistItemSerializer(serializers.ModelSerializer):
+    product = ProductSerializer(read_only=True)
+    product_id = serializers.IntegerField(write_only=True)
+
+    class Meta:
+        model = WishlistItem
+        fields = ('id', 'user', 'product', 'product_id', 'created_at')
+        read_only_fields = ('id', 'user', 'product', 'created_at')

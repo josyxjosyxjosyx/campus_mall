@@ -9,11 +9,11 @@ from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import TokenRefreshView
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
-from apps.products.views import ProductViewSet, CategoryViewSet, ProductReviewViewSet
+from apps.products.views import ProductViewSet, CategoryViewSet, ProductReviewViewSet, WishlistViewSet
 from apps.orders.views import OrderViewSet
 from apps.vendors.views import VendorViewSet
 from apps.testimonials.views import TestimonialViewSet
-from apps.users.views import login_view, register_view, profile_view, AddressViewSet
+from apps.users.views import login_view, register_view, profile_view, AddressViewSet, check_email_view
 from apps.admin_panel.views import (
     admin_stats, sales_summary, vendor_sales_report, get_all_users, update_user_status,
     approve_vendor, suspend_vendor, get_all_vendors,
@@ -26,6 +26,7 @@ router = DefaultRouter()
 router.register(r'products', ProductViewSet, basename='product')
 router.register(r'categories', CategoryViewSet, basename='category')
 router.register(r'reviews', ProductReviewViewSet, basename='review')
+router.register(r'wishlist', WishlistViewSet, basename='wishlist')
 router.register(r'orders', OrderViewSet, basename='order')
 router.register(r'vendors', VendorViewSet, basename='vendor')
 router.register(r'testimonials', TestimonialViewSet, basename='testimonial')
@@ -40,6 +41,7 @@ urlpatterns = [
     # Authentication endpoints
     path('api/auth/login/', login_view, name='login'),
     path('api/auth/register/', register_view, name='register'),
+    path('api/auth/check_email/', check_email_view, name='check_email'),
     path('api/auth/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/auth/profile/', profile_view, name='profile'),
     

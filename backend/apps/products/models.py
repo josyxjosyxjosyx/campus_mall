@@ -165,3 +165,18 @@ class ProductReview(models.Model):
     
     def __str__(self):
         return f"Review by {self.customer_name} for {self.product.name} - {self.rating}★"
+
+
+class WishlistItem(models.Model):
+    """User wishlist/watchlist items."""
+
+    user = models.ForeignKey('users.User', on_delete=models.CASCADE, related_name='wishlist')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='wishlisted_by')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'product')
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"{self.user.email} wishes {self.product.name}"

@@ -15,7 +15,10 @@ import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
 import NoPurchaseRoute from "@/components/NoPurchaseRoute";
 import Login from "./pages/Login";
+import LoginEmail from "./pages/LoginEmail";
+import LoginPassword from "./pages/LoginPassword";
 import Register from "./pages/Register";
+import Wishlist from "./pages/Wishlist";
 import VendorPending from "./pages/VendorPending";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
@@ -51,7 +54,8 @@ const App = () => (
                     <Route path="/products" element={<NoPurchaseRoute><Products /></NoPurchaseRoute>} />
                     <Route path="/products/:id" element={<NoPurchaseRoute><ProductDetail /></NoPurchaseRoute>} />
                     <Route path="/contact" element={<Contact />} />
-                    <Route path="/login" element={<Login />} />
+                    <Route path="/login" element={<LoginEmail />} />
+                    <Route path="/login/password" element={<LoginPassword />} />
                     <Route path="/register" element={<Register />} />
                     <Route path="/vendor-pending" element={<VendorPending />} />
                     <Route path="/cart" element={<Cart />} />
@@ -66,6 +70,7 @@ const App = () => (
                     <Route path="/vendor/profile" element={<ProtectedRoute allowedRoles={["VENDOR"]}><VendorProfile /></ProtectedRoute>} />
                     <Route path="/vendor/orders" element={<ProtectedRoute allowedRoles={["VENDOR"]}><VendorOrders /></ProtectedRoute>} />
                     <Route path="/admin" element={<ProtectedRoute allowedRoles={["ADMIN"]}><AdminDashboard /></ProtectedRoute>} />
+                    <Route path="/wishlist" element={<ProtectedRoute allowedRoles={["CUSTOMER"]}><Wishlist /></ProtectedRoute>} />
                     <Route path="*" element={<NotFound />} />
                   </Routes>
                 </main>

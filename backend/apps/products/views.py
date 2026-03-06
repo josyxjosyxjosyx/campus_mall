@@ -9,6 +9,8 @@ from django_filters.rest_framework import DjangoFilterBackend
 from apps.users.permissions import IsVendor, IsVendorOrReadOnly
 from .models import Product, Category, ProductImage, ProductVariation, VariationImage, ProductReview
 from .serializers import ProductSerializer, ProductDetailSerializer, CategorySerializer, ProductReviewSerializer
+from .models import WishlistItem
+from .serializers import WishlistItemSerializer
 import json
 
 def _create_gallery_images(product, files):
@@ -287,3 +289,38 @@ class ProductReviewViewSet(viewsets.ModelViewSet):
         
         serializer = self.get_serializer(reviews, many=True)
         return Response(serializer.data)
+
+
+class WishlistViewSet(viewsets.ModelViewSet):
+    """ViewSet for managing user wishlist/watchlist."""
+
+    queryset = WishlistItem.objects.all()
+    serializer_class = WishlistItemSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        # Users should only see their own wishlist
+        return WishlistItem.objects.filter(user=self.request.user).select_related('product')
+
+    def create(self, request, *args, **kwargs):
+        # Expect payload { product_id: <id> }
+        serializer = WishlistItemSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        product_id = serializer.validated_data.get('product_id')
+        # Ensure product exists
+        try:
+            product = Product.objects.get(id=product_id)
+        except Product.DoesNotExist:
+            return Response({'error': 'Product not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        item, created = WishlistItem.objects.get_or_create(user=request.user, product=product)
+        out = WishlistItemSerializer(item)
+        return Response(out.data, status=status.HTTP_201_CREATED if created else status.HTTP_200_OK)
+
+    def destroy(self, request, *args, **kwargs):
+        # delete by id
+        instance = self.get_object()
+        if instance.user != request.user:
+            return Response({'error': 'Not allowed'}, status=status.HTTP_403_FORBIDDEN)
+        instance.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

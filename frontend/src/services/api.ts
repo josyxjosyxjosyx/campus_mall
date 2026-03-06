@@ -285,6 +285,19 @@ class ApiService {
     return this.request("/categories/");
   }
 
+  // WISHLIST ENDPOINTS
+  async getWishlist() {
+    return this.request("/wishlist/");
+  }
+
+  async addToWishlist(productId: number) {
+    return this.post("/wishlist/", { product_id: productId });
+  }
+
+  async removeWishlist(id: number) {
+    return this.delete(`/wishlist/${id}/`);
+  }
+
   async createCategory(categoryData: any) {
     return this.request("/admin/categories/create/", {
       method: "POST",

@@ -5,8 +5,7 @@ import { useAuth } from "@/context/AuthContext";
 import { useCurrency, type Currency } from "@/context/CurrencyContext";
 import { useCart } from "@/context/CartContext";
 import { Button } from "@/components/ui/button";
-import { ProfileEditor } from "@/components/ProfileEditor";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const Navbar = () => {
   const { user, logout, isAuthenticated } = useAuth();
@@ -17,9 +16,10 @@ const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const [currencyOpen, setCurrencyOpen] = useState(false);
-  const [showProfileEditor, setShowProfileEditor] = useState(false);
   const [categories, setCategories] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
+  const [searchExpanded, setSearchExpanded] = useState(false);
+  const searchRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const load = async () => {
@@ -46,6 +46,18 @@ const Navbar = () => {
       }
     };
     loadWishlistCount();
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
+        setSearchExpanded(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
   }, []);
 
   const dashboardPath = user?.role === "ADMIN" ? "/admin" : user?.role === "VENDOR" ? "/vendor" : "/dashboard";
@@ -77,13 +89,19 @@ const Navbar = () => {
           )}
         </nav>
 
-        {/* Search (desktop) - compact, expands on hover (customers only) */}
+        {/* Search (desktop) - expands on click, collapses on click outside */}
         {(!user || user.role === "CUSTOMER") && (
           <div className="hidden md:flex items-center flex-1 justify-center px-6">
-            <div className="flex items-center">
-              <div className="overflow-hidden w-[60px] h-[60px] hover:w-[270px] transition-[width] duration-300 rounded-full shadow-md">
+            <div ref={searchRef} className="flex items-center">
+              <div
+                className="overflow-hidden h-[60px] rounded-full shadow-md transition-[width] duration-300"
+                style={{ width: searchExpanded ? '270px' : '60px' }}
+              >
                 <div className="flex items-center h-full">
-                  <div className="w-[60px] h-[60px] flex items-center justify-center bg-primary text-white rounded-full flex-shrink-0">
+                  <div
+                    onClick={() => setSearchExpanded(!searchExpanded)}
+                    className="w-[60px] h-[60px] flex items-center justify-center bg-primary text-white rounded-full flex-shrink-0 cursor-pointer"
+                  >
                     <Search className="h-5 w-5" />
                   </div>
                   <div className="flex-1 pl-3 pr-3 bg-white rounded-r-full h-full flex items-center">
@@ -181,23 +199,13 @@ const Navbar = () => {
                       </button>
                       <button
                         onClick={() => {
-                          navigate("/profile");
-                          setProfileOpen(false);
-                        }}
-                        className="w-full flex items-center gap-2 px-4 py-2 text-sm text-foreground hover:bg-muted transition-colors text-left"
-                      >
-                        <User className="h-4 w-4" />
-                        View Profile
-                      </button>
-                      <button
-                        onClick={() => {
-                          setShowProfileEditor(true);
+                          navigate("/settings");
                           setProfileOpen(false);
                         }}
                         className="w-full flex items-center gap-2 px-4 py-2 text-sm text-foreground hover:bg-muted transition-colors text-left"
                       >
                         <Settings className="h-4 w-4" />
-                        Edit Profile
+                        Settings
                       </button>
                       <button
                         onClick={() => {
@@ -292,9 +300,6 @@ const Navbar = () => {
         </div>
       )}
     </header>
-
-    {/* Profile Editor Modal */}
-    <ProfileEditor isOpen={showProfileEditor} onClose={() => setShowProfileEditor(false)} />
     </>
   );
 };

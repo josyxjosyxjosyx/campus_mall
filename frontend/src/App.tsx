@@ -26,6 +26,7 @@ import CheckoutSuccess from "./pages/CheckoutSuccess";
 import CustomerDashboard from "./pages/CustomerDashboard";
 import Addresses from "./pages/Addresses";
 import Profile from "./pages/Profile";
+import Settings from "./pages/Settings";
 import VendorDashboard from "./pages/VendorDashboard";
 import VendorProductForm from "./pages/VendorProductForm";
 import VendorProfile from "./pages/VendorProfile";
@@ -63,7 +64,7 @@ const App = () => (
                     <Route path="/checkout/success" element={<ProtectedRoute allowedRoles={["CUSTOMER"]}><CheckoutSuccess /></ProtectedRoute>} />
                     <Route path="/dashboard" element={<ProtectedRoute allowedRoles={["CUSTOMER"]}><CustomerDashboard /></ProtectedRoute>} />
                     <Route path="/addresses" element={<ProtectedRoute allowedRoles={["CUSTOMER"]}><Addresses /></ProtectedRoute>} />
-                    <Route path="/profile" element={<ProtectedRoute allowedRoles={["CUSTOMER"]}><Profile /></ProtectedRoute>} />
+                    <Route path="/settings" element={<ProtectedRoute allowedRoles={["CUSTOMER"]}><Settings /></ProtectedRoute>} />
                     <Route path="/vendor" element={<ProtectedRoute allowedRoles={["VENDOR"]}><VendorDashboard /></ProtectedRoute>} />
                     <Route path="/vendor/product/new" element={<ProtectedRoute allowedRoles={["VENDOR"]}><VendorProductForm /></ProtectedRoute>} />
                     <Route path="/vendor/product/:id/edit" element={<ProtectedRoute allowedRoles={["VENDOR"]}><VendorProductForm /></ProtectedRoute>} />
